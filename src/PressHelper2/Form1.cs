@@ -34,13 +34,6 @@ namespace PressHelper2
             InitializeComponent();
 
             comboBox1.DataSource = XProject.Projects;
-
-#if DEBUG
-            checkBox2.Checked = false;
-            checkBox3.Checked = false;
-            checkBox5.Checked = false;
-#endif
-
         }
 
         private void button1_Click(object sender, EventArgs e)

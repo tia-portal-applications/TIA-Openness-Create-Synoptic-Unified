@@ -170,7 +170,14 @@ namespace PressHelper2
                 }                
             }
 
-            var exportFolder = (sw.Parent as Project).Path.DirectoryName + "\\UserFiles\\Synoptic";
+            var currentObj = sw.Parent;
+            while (!(currentObj is Project)) // find TIA Portal project object
+            {
+                currentObj = currentObj.Parent;
+            }
+            var exportFolder = (currentObj as Project).Path.DirectoryName + "\\UserFiles\\Synoptic";
+            Log("Export JSON files to :" + exportFolder);
+
             if (!Directory.Exists(exportFolder))
                 Directory.CreateDirectory(exportFolder);
 
