@@ -83,6 +83,10 @@ namespace PressHelper2
 
                     //add block title to network
                     nw.SetAttributeValue("BlockTitle", fcDoc.Root.Elements().Last().Element("AttributeList").Element("Name").Value);
+                    //add network name to network
+                    nw.SetAttributeValue("NetworkName", el.Element("ObjectList").Elements("MultilingualText")
+                            .Where(x => x.Attribute("CompositionName").Value == "Title")
+                            .Descendants("Text").FirstOrDefault().Value);
 
                     //search for comment hashtags
                     string comment = el.Element("ObjectList").Elements("MultilingualText")
@@ -143,6 +147,9 @@ namespace PressHelper2
                             var blockName = fcDoc.Root.Elements().Last().Element("AttributeList").Element("Name").Value;
                             nw.SetAttributeValue("Name", name);
                             nw.SetAttributeValue("BlockTitle", blockName);
+                            nw.SetAttributeValue("NetworkName", el.Element("ObjectList").Elements("MultilingualText")
+                                    .Where(x => x.Attribute("CompositionName").Value == "Title")
+                                    .Descendants("Text").FirstOrDefault().Value);
                             nw.SetAttributeValue("StepName", il.Ancestors("Step").FirstOrDefault()?.Attribute("Name")?.Value);
 
                             var block = plc.GetOpennessObject<Siemens.Engineering.SW.Blocks.PlcBlock>(blockName);
@@ -164,6 +171,9 @@ namespace PressHelper2
                         if(nw != null)
                         {
                             nw.SetAttributeValue("BlockTitle", fcDoc.Root.Elements().Last().Element("AttributeList").Element("Name").Value);
+                            nw.SetAttributeValue("NetworkName", el.Element("ObjectList").Elements("MultilingualText")
+                                    .Where(x => x.Attribute("CompositionName").Value == "Title")
+                                    .Descendants("Text").FirstOrDefault().Value);
                             synoptics.Add(nw);
                         }
                     }
@@ -194,6 +204,7 @@ namespace PressHelper2
             int xIncrement = 30;
             int yIncrement = 100;
             string BlockTitle = element.Attribute("BlockTitle").Value;
+            string networkName = element.Attribute("NetworkName").Value;
 
             List<XElement> operands = element.Element("Parts").Elements("Access").ToList();
             List<Operand> operandItems = new List<Operand>();
@@ -245,85 +256,79 @@ namespace PressHelper2
                 operand.yPosition = yStart;
             }
 
-            int xCounter = 0;
-            int yCounter = 0;
-
             //Split connections with more than one target operand, alter positions of operands
-            foreach (List<int> connection in connections)
+            int originalCount = connections.Count;
+            for (int i = 0; i < originalCount; i++)
             {
-                yCounter = 0;
-                xCounter = 0;
+                List<int> connection = connections[i];
+                int yCounter = 0;
                 if (connection.Count>2)
                 {
-                    foreach(Operand operand in operandItems)
+                    var sourceOperand = operandItems.FirstOrDefault(x => x.id == connection[0]);
+                    for (int j = 1; j < connection.Count; j++)
                     {
-                        if(connection.Contains(operand.id)&& operand.id != connection[0])
+                        int targetId = connection[j];
+                        var connectedOperandItem = operandItems.FirstOrDefault(x => x.id == targetId);
+                        List<int> newConnection = new List<int>();
+                        newConnection.Add(connection[0]);
+                        newConnection.Add(connectedOperandItem.id);
+                        connections.Add(newConnection);
+                        connectedOperandItem.yPosition += yCounter * yIncrement;
+                        
+                        yCounter++;
+                        connectedOperandItem.xPosition = sourceOperand.xPosition + xIncrement;
+                        if (j == connection.Count - 1) // set the xPositions of all following operands new
                         {
-                            List<int>newConnection = new List<int>();
-                            newConnection.Add(connection[0]);
-                            newConnection.Add(operand.id);
-                            connections.Add(newConnection);
-                            operand.yPosition += yCounter * yIncrement;
-
-                            
-                            yCounter++;
-                            xCounter++;
+                            int startxPos = connectedOperandItem.xPosition;
+                            int xGrowth_ = 0;
+                            for (int k = j + 1; k < originalCount; k++)
+                            {
+                                operandItems[k].xPosition = startxPos + xIncrement * xGrowth_;
+                                xGrowth_++;
+                            }
                         }
-                        operand.xPosition -= xCounter * xIncrement;
                     }
                     connections.Remove(connection);
+                    i--;
+                    originalCount--;
                 }
             }
 
-            WriteJson(connections, operandItems, BlockTitle, exportFolder);
+            WriteJson(connections, operandItems, BlockTitle + "#" + networkName, exportFolder);
         }
 
         static public List<List<int>> FindConnectedOperands(List<Connection> connections)
         {
-            List<List<int>> operandConnectionIDs = new List<List<int>> ();
-            List<List<int>> connectionPointIDs = new List<List<int>>();
             List<List<int>> connectedOperands = new List<List<int>>();
-
-            //Sort and create lists of operands and connections
-            foreach(Connection connection in connections)
-            {
-                if(connection.isOperand)
-                {
-                    int connectionID = (int.Parse(connection.connectionInfo.Element("NameCon").Attribute("UId").Value));
-                    int operandID = (int.Parse(connection.connectionInfo.Element("IdentCon").Attribute("UId").Value));
-                    List<int> connector = new List<int>();
-                    connector.Add(connectionID);
-                    connector.Add(operandID);
-                    operandConnectionIDs.Add(connector);
-                }
-                else
-                {
-                    List<int> connectionIds = new List<int>();
-                    List<XElement> connectionPoints = connection.connectionInfo.Elements("NameCon").ToList();
-                    foreach(XElement connectionPoint in connectionPoints)
-                    {
-                        connectionIds.Add(int.Parse(connectionPoint.Attribute("UId").Value));
-                    }
-                    connectionPointIDs.Add(connectionIds);
-                }
-            }
+            var operands = connections.Where(x => x.isOperand == true);
+            var connectionPoints = connections.Where(x => x.isOperand == false);
 
             //find and save connected operands
-            foreach(List<int> operand in operandConnectionIDs)
+            foreach (Connection operand in operands)
             {
                 List<int> operandConnection = new List<int>();
-                operandConnection.Add(operand[1]);
-
-                foreach(List<int> connection in connectionPointIDs)
+                operandConnection.Add(operand.realOperandId); // add source id
+                // 2 operands are always connected via one or multiple connectionPoints
+                foreach (Connection connectionPoint in connectionPoints.Where(x => x.outID == operand.operandID)) // filter by only fitting connection points
                 {
-                    if(connection.Contains(operand[0]))
+                    // now we have a connectionPoint, so search for all next operands
+                    foreach (int inId in connectionPoint.inIDs)
                     {
-                        connection.Remove(operand[0]);
-                        foreach(List<int> operandEndPoint in operandConnectionIDs)
+                        var targetOperand = operands.FirstOrDefault(x => x.operandID == inId);
+                        if (targetOperand != null)
                         {
-                            if(connection.Contains(operandEndPoint[0]))
+                            operandConnection.Add(targetOperand.realOperandId);
+                        }
+                        else // sometimes there is another connection inbetween (when multiple operands goes to one operand)
+                        {
+                            var dummyConnectionInbetween = connectionPoints.FirstOrDefault(x => x.outID == inId);
+                            if (dummyConnectionInbetween != null)
                             {
-                                operandConnection.Add(operandEndPoint[1]);
+                                var targetOperand_ = operands.FirstOrDefault(x => dummyConnectionInbetween.inIDs.Contains(x.operandID));
+                                if (targetOperand_ != null)
+                                {
+                                    operandConnection.Add(targetOperand_.realOperandId);
+                                }
                             }
                         }
                     }
@@ -340,27 +345,37 @@ namespace PressHelper2
             List<string> textToWrite = new List<string>();
 
             textToWrite.Add("{");
-            textToWrite.Add("    Name: " + blockTitle + ",");
-            textToWrite.Add("    Steps: [");
+            textToWrite.Add("    \"Name\": \"" + blockTitle + "\",");
+            textToWrite.Add("    \"Steps\": [");
 
             //operands get added
-            foreach (Operand operand in operands)
+            for (int i = 0; i < operands.Count; i++)
             {
-                string line = "        { Id: " + operand.id + ", HmiTag: " + operand.name + ", Top: " + operand.xPosition + ", Left: " + operand.yPosition + "}";
+                Operand operand = operands[i];
+                // TODO: adjust comment to a good name, not just the name of the tag
+                string line = "        { \"Id\": " + operand.id + ", \"HmiTag\": \"" + operand.name + "\", \"Top\": " + operand.xPosition + ", \"Left\": " + operand.yPosition + ", \"Comment\": \"" + operand.name + "\"}";
+                if (i < operands.Count - 1)
+                    line += ","; // comma at the end of line to seperate the objects
                 textToWrite.Add(line);
             }
 
             textToWrite.Add("    ], ");
-            textToWrite.Add("    Connectors: [");
+            textToWrite.Add("    \"Connectors\": [");
 
             //Connectors get added
-            foreach (List<int> connection in connections)
+            var connectionsWith2Connectors = connections.Where(x => x.Count == 2);
+            int j = 0;
+            int connectionCount = connectionsWith2Connectors.Count();
+            foreach (var connection in connectionsWith2Connectors)
             {
-                if(connection.Count==2)
+                if (connection.Count==2)
                 {
-                    string line = "        { SourceId: " + connection[0] + ", TargetId: " + connection[1] + "}";
+                    string line = "        { \"SourceId\": " + connection[0] + ", \"DestinationId\": " + connection[1] + "}";
+                    if (j < connectionCount - 1)
+                        line += ","; // comma at the end of line to seperate the objects
                     textToWrite.Add(line);
                 }
+                j++;
             }
 
             textToWrite.Add("    ]");
@@ -382,11 +397,26 @@ namespace PressHelper2
                    block.GetService<ICompilable>()?.Compile();
 
                 if (block.IsConsistent)
-                    block.Export(
-                        new FileInfo(directory + Directory.GetFiles(directory).Length + ".xml"),
-                        Siemens.Engineering.ExportOptions.None);
+                {
+                    try {
+                        block.Export(
+                            new FileInfo(directory + Directory.GetFiles(directory).Length + ".xml"),
+                            Siemens.Engineering.ExportOptions.None);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("is not permitted"))
+                        {
+                            Log(ex.Message);
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
                 else
-                    Log($"Export nicht möglich: Baustein \"{block.Name}\"");
+                    Log($"Export nicht möglich, weil der Baustein inkonsistent ist: \"{block.Name}\"");
             }
 
             foreach (var subgroup in group.Groups)
