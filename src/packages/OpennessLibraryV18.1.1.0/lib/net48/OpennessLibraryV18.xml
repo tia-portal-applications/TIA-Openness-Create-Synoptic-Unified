@@ -1,0 +1,1569 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OpennessLibraryV18</name>
+    </assembly>
+    <members>
+        <member name="T:OpennessLibrary.Analyzer.Analyzer">
+            <summary>
+            Utility class for analyzing the plc program.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Analyzer.Analyzer.GetComment(System.String)">
+            <summary>
+            Return the text comment of the declaration of the given symbol.
+            </summary>
+            <param name="symbol">The name of the symbol as it appears in TIA Portal.</param>
+            <returns>The text comment.</returns>
+        </member>
+        <member name="T:OpennessLibrary.Analyzer.Extensions">
+            <summary>
+            Extension methods for the plc program analyzer.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Analyzer.Extensions.GetAnalyzer(OpennessLibrary.XPlc)">
+            <summary>
+            Returns the analyzer utility object for this plc program.
+            </summary>
+            <param name="plc">Any plc object.</param>
+            <returns>The anaylzer object.</returns>
+        </member>
+        <member name="M:OpennessLibrary.Extensions.Extensions.GetGroups(Siemens.Engineering.IEngineeringObject)">
+            <summary>
+            Returns a collection of the child groups of this object group.
+            </summary>
+            <param name="parent">The parent object group.</param>
+            <returns></returns>
+        </member>
+        <member name="M:OpennessLibrary.Extensions.Extensions.GetObjects(Siemens.Engineering.IEngineeringObject)">
+            <summary>
+            Returns a collection of the objects in a group.
+            </summary>
+            <param name="parent">The parent object group.</param>
+            <returns></returns>
+        </member>
+        <member name="T:OpennessLibrary.Hmi.XHmi">
+            <summary>
+            Reference to an HMI object in the TIA Portal project.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.Hmi.XHmi.Name">
+            <summary>
+            The name of the device item.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmi.Import(OpennessLibrary.ImportExportObject,System.String)">
+            <summary>
+            Imports the given object to the HMI.
+            </summary>
+            <remarks>If an object of the same type with the same name already exists, it will be overwritten.
+            </remarks>
+            <param name="obj">The object to be imported.</param>
+            <param name="path">The target path. Will be created if nonexistent.</param>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmi.ExportProjectTexts(System.String,System.String)">
+            <summary>
+            Exports an .xlsx file of all project texts in the given languages.
+            </summary>
+            <param name="sourceLanguage">The source language for the exported list.</param>
+            <param name="targetLanguage">The target language for the exported list.</param>
+            <returns>The file path of the exported list.</returns>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmi.ImportProjectTexts(System.String)">
+            <summary>
+            Imports all texts from the given file to the project.
+            </summary>
+            <param name="File">The path of the .xlsx file for import.</param>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmi.GetScreen(System.String)">
+            <summary>
+            Returns a screen object.
+            </summary>
+            <param name="Name">The name of the screen.</param>
+            <returns>The screen object.</returns>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmi.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.Hmi.XHmiScreenObject">
+            <summary>
+            Represents an object on a HMI screen.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.Hmi.XHmiScreenObject.Name">
+            <summary>
+            The name of the object.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiScreenObject.ReplaceTagReference(System.String,System.String)">
+            <summary>
+            Replaces all references to the old tag with a reference to the new tag.
+            </summary>
+            <param name="OldTag">The name of the old tag.</param>
+            <param name="NewTag">The name of the new tag.</param>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiScreenObject.SetAttribute(System.String,System.String)">
+            <summary>
+            Sets the value of the given attribute, if it exists.
+            </summary>
+            <param name="Attribute">The name of the attribute.</param>
+            <param name="Value">The new value.</param>
+        </member>
+        <member name="P:OpennessLibrary.Hmi.XHmiScreenObject.Attributes">
+            <summary>
+            Returns a dictionary of all attributes.
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.Hmi.XHmiScreenObject.ValueType">
+            <summary>
+            The type of a HMI constant.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiScreenObject.ValueType.Int32">
+            <summary>
+            Integer
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiScreenObject.ValueType.Double">
+            <summary>
+            Floating point
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiScreenObject.ValueType.String">
+            <summary>
+            String
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiScreenObject.ReplaceValue(System.String,System.String,OpennessLibrary.Hmi.XHmiScreenObject.ValueType)">
+            <summary>
+            Replace all references to a constant value with the new value. 
+            </summary>
+            <param name="oldValue">The old value.</param>
+            <param name="newValue">The new value.</param>
+            <param name="valueType">The type of the value.</param>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiScreenObject.ReplaceText(System.String,System.String)">
+            <summary>
+            Replace all instances of a text with the new text.
+            </summary>
+            <param name="oldText">The old text to replace.</param>
+            <param name="newText">The new text.</param>
+        </member>
+        <member name="P:OpennessLibrary.Hmi.XHmiScreenObject.ObjectList">
+            <summary>
+            Returns a list of all child objects.
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.Hmi.XHmiScreen">
+            <summary>
+            A single HMI screen. 
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiScreen.#ctor(OpennessLibrary.Hmi.XHmiScreen)">
+            <summary>
+            Creates a new HMI screen from an existing screen.
+            </summary>
+            <param name="other">The screen that will be copied.</param>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiScreen.#ctor(System.String)">
+            <summary>
+            Creates a new HMI screen with the given name.
+            </summary>
+            <param name="name">The name of the new screen.</param>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiScreen.#ctor(System.IO.FileInfo)">
+            <summary>
+            Creates an HMI screen from an XML file.
+            </summary>
+            <param name="file">The path to the source XML file.</param>
+        </member>
+        <member name="P:OpennessLibrary.Hmi.XHmiScreen.Name">
+            <summary>
+            The screen name.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.Hmi.XHmiScreen.Number">
+            <summary>
+            The screen number.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiScreen.GetObjectInstance(System.String)">
+            <summary>
+            Searches in all layers of the screen for any object with the given name.
+            </summary>
+            <param name="ObjectName">The name of the object.</param>
+            <returns>A object with the given name.</returns>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiScreen.RemoveObjectInstance(System.String)">
+            <summary>
+            Searches in all layers of the screen for any object with the given name and deletes it.
+            </summary>
+            <param name="ObjectName">The name of the object.</param>
+            <returns>Object found and removed.</returns>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiScreen.AddObjectInstance(System.String,OpennessLibrary.Hmi.XHmiScreenObject)">
+            <summary>
+            Adds the object to the given screen layer.
+            </summary>
+            <param name="ScreenLayer">The name of the target screen layer.</param>
+            <param name="HmiObject">The object to be added to the layer.</param>
+        </member>
+        <member name="T:OpennessLibrary.Hmi.XHmiTextListCollection">
+            <summary>
+            A collection of multiple HMI text lists for simultaneous import.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiTextListCollection.HmiTextLists">
+            <summary>
+            The text list collection.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiTextListCollection.#ctor">
+            <summary>
+            Creates a new text list collection.
+            You may add single text lists to the collection to import all lists simultaneously.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.Hmi.XHmiTextListCollection.Name">
+            <summary>
+            The name of the collection.
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.Hmi.XHmiTagTable">
+            <summary>
+            A HMI tag table object.
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.Hmi.XHmiTagTable.Tag">
+            <summary>
+            A single HMI tag.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiTagTable.Tag.Name">
+            <summary>The name of the tag.</summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiTagTable.Tag.Type">
+            <summary>The type of the tag.</summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiTagTable.Tag.StartValue">
+            <summary>The start value of the tag.</summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiTagTable.Tag.Comment">
+            <summary>The comment of the tag.</summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiTagTable.Tag.AddressAccessMode">
+            <summary>The access mode of the tag.</summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiTagTable.Tag.Address">
+            <summary>The logical address of the tag.</summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiTagTable.Tag.AcquisitionCycle">
+            <summary>The acquisition cycle of the tag.</summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiTagTable.Tag.Connection">
+            <summary>The connection of the tag.</summary>
+        </member>
+        <member name="P:OpennessLibrary.Hmi.XHmiTagTable.Tags">
+            <summary>
+            A list of all tags in the tag table.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiTagTable.#ctor(System.String)">
+            <summary>
+            Creates a new HMI tag table object.
+            </summary>
+            <param name="name">The name of the tag table.</param>
+        </member>
+        <member name="P:OpennessLibrary.Hmi.XHmiTagTable.Name">
+            <summary>
+            The name of the tag table.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiTagTable.AddInternalTag(System.String,System.String,System.String,System.String)">
+            <summary>
+            Adds an internal tag to the tag table.
+            </summary>
+            <param name="Name">The name of the tag.</param>
+            <param name="Type">The type of the tag.</param>
+            <param name="StartValue">The start value of the tag.</param>
+            <param name="Comment">The comment of the tag.</param>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiTagTable.AddAbsoluteTag(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Adds an external tag to the tag table with absolute addressing.
+            </summary>
+            <param name="Name">The name of the tag.</param>
+            <param name="Type">The type of the tag.</param>
+            <param name="Address">The address of the tag.</param>
+            <param name="Connection">The connection of the tag.</param>
+            <param name="Cycle">The acquisition cycle of the tag.</param>
+            <param name="Comment">The comment of the tag.</param>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiTagTable.AddSymbolicTag(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Adds an external tag to the tag table with absolute addressing.
+            </summary>
+            <param name="Name">The name of the tag.</param>
+            <param name="Type">The type of the tag.</param>
+            <param name="Symbol">The plc symbol of the tag.</param>
+            <param name="Connection">The connection of the tag.</param>
+            <param name="Cycle">The acquisition cycle of the tag.</param>
+            <param name="Comment">The comment of the tag.</param>
+        </member>
+        <member name="T:OpennessLibrary.Hmi.XHmiScript">
+            <summary>
+            An HMI VB script object.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.Hmi.XHmiScript.Name">
+            <summary>
+            The name of the script.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiScript.Code">
+            <summary>
+            The VB code of the script.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiScript.ByRefParams">
+            <summary>
+            The parameters passed as ByReference.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Hmi.XHmiScript.ByValParams">
+            <summary>
+            The parameters passed as ByValue.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.Hmi.XHmiScript.IsFunction">
+            <summary>
+            The script is a VB function.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiScript.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new VB script.
+            </summary>
+            <param name="name">The name of the script.</param>
+            <param name="code">The VB code of the script.</param>
+        </member>
+        <member name="T:OpennessLibrary.Hmi.XHmiTextList">
+            <summary>
+                A HMI text list object.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiTextList.#ctor(System.String)">
+            <summary>
+                Creates a new empty HMI text list.
+            </summary>
+            <param name="name">The name of the text list.</param>
+        </member>
+        <member name="P:OpennessLibrary.Hmi.XHmiTextList.Name">
+            <summary>
+                The name of the text list.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Hmi.XHmiTextList.AddEntry(System.Int32,System.String)">
+            <summary>
+                Add a new entry in the active editing language to the text list.
+            </summary>
+            <param name="index">The text list index of the new entry.</param>
+            <param name="text">The text of the text list entry.</param>
+        </member>
+        <member name="T:OpennessLibrary.ImportExportObject">
+            <summary>
+            Base class for any object that can be imported/exported
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.ImportExportObject.Name">
+            <summary>
+            The name of the object.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.ImportExportObject.Save(System.String)">
+            <summary>
+            Save the object as an XML file. 
+            </summary>
+            <param name="path">The target file name.</param>
+            <exception cref="T:System.ArgumentException">File already exists.</exception>
+        </member>
+        <member name="M:OpennessLibrary.ImportExportObject.Save(System.String,System.Boolean)">
+            <summary>
+            Save the object as an XML file. 
+            </summary>
+            <param name="path">The target file name.</param>
+            <param name="overwrite">Overwrite existing file.</param>
+        </member>
+        <member name="M:OpennessLibrary.ImportExportObject.GetDocument">
+            <summary>
+            Get a copy of the XML document of the object.
+            </summary>
+            <returns>The object's XML document</returns>
+        </member>
+        <member name="T:OpennessLibrary.Graph.XGraphAction">
+            <summary>
+            A GRAPH step action.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Graph.XGraphAction.Identifier">
+            <summary>
+            The type of action.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Graph.XGraphAction.Operand">
+            <summary>
+            The operand connected to the action.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Graph.XGraphAction.#ctor(OpennessLibrary.Graph.ActionIdentifier,System.String)">
+            <summary>
+            Creates a single GRAPH action with an operand.
+            </summary>
+            <param name="identifier">The type of action.</param>
+            <param name="operand">The operand connected to the action</param>
+        </member>
+        <member name="T:OpennessLibrary.Graph.XGraphBlock">
+            <summary>
+            A plc block in GRAPH.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.Graph.XGraphBlock.ExtensionBlockName">
+            <summary>
+            Optional: Set the name of the GRAPH extension block.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Graph.XGraphBlock.#ctor(System.String)">
+            <summary>
+            Creates an empty GRAPH FB. 
+            </summary>
+            <param name="name">The name of the block.</param>
+        </member>
+        <member name="M:OpennessLibrary.Graph.XGraphBlock.AddStep(System.String,OpennessLibrary.Graph.XGraphTransition,OpennessLibrary.Graph.XGraphAction[])">
+            <summary>
+            Add a linear step/transition pair to the sequence.
+            </summary>
+            <param name="name">The name of the step.</param>
+            <param name="transition">The transition logic.</param>
+            <param name="actions">Any actions for the step.</param>
+        </member>
+        <member name="T:OpennessLibrary.Graph.ActionIdentifier">
+            <summary>
+            The type of the action.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Graph.ActionIdentifier.N">
+            <summary>
+            N Action. See STEP7 online help for details.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Graph.ActionIdentifier.S">
+            <summary>
+            S Action. See STEP7 online help for details.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Graph.ActionIdentifier.R">
+            <summary>
+            R Action. See STEP7 online help for details.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Graph.ActionIdentifier.D">
+            <summary>
+            D Action. See STEP7 online help for details.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Graph.ActionIdentifier.L">
+            <summary>
+            L Action. See STEP7 online help for details.
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.Graph.XGraphTransition">
+            <summary>
+            A transition in a GRAPH sequence.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.Graph.XGraphTransition.Number">
+            <summary>
+            The number of the transition.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.Graph.XGraphTransition.Name">
+            <summary>
+            The name of the transition.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.Graph.XGraphTransition.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new transition object with the parsed SCL code as logic.
+            </summary>
+            <param name="name">The name of the transition.</param>
+            <param name="code">The SCL code to be parsed as logic.</param>
+            <example>
+            The SCL code must be one line with an assignment statement. Examples:
+            <code>
+            T := #localVar AND globalVar;
+            T := (#localVar AND globalvar) OR I100.0;
+            </code>
+            </example>
+        </member>
+        <member name="T:OpennessLibrary.Graph.XGraphStep">
+            <summary>
+            A single step in a GRAPH sequence.
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.XPlcCustomNetwork">
+            <summary>
+            A custom network will not be overwritten if any network with the same network comment exists in the target block.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcCustomNetwork.#ctor">
+            <summary>
+            Creates an empty custom network.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcCustomNetwork.#ctor(OpennessLibrary.XPlcNetwork)">
+            <summary>
+            Creates a copy of a network and makes it a custom network.
+            </summary>
+            <param name="network">The network to copy.</param>
+        </member>
+        <member name="T:OpennessLibrary.XPlcInstanceDB">
+            <summary>
+            A global instance DB of a function block.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcInstanceDB.#ctor(System.String,System.String)">
+            <summary>
+            Creates an instance DB of a function block.
+            </summary>
+            <param name="name">The name of the instance DB.</param>
+            <param name="baseName">The name of the function block.</param>
+        </member>
+        <member name="P:OpennessLibrary.XPlcInstanceDB.Name">
+            <summary>
+            The name of the instance DB.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.XPlcInstanceDB.Number">
+            <summary>
+            The number of the instance DB.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.XPlcInstanceDB.Title">
+            <summary>
+            The title of the instance DB.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.XPlcInstanceDB.Comment">
+            <summary>
+            The block comment of the instance DB.
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.XPlcNetwork">
+            <summary>
+            A plc LAD/FBD or mixed SCL network.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcNetwork.#ctor">
+            <summary>
+            Creates an empty plc network.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.XPlcNetwork.Title">
+            <summary>
+            The network title in the current editing language. 
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.XPlcNetwork.Comment">
+            <summary>
+            The network comment in the current editing language.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcNetwork.ReplaceOperand(System.String,System.String)">
+            <summary>
+            Replaces all occurences of the operand in the network.
+            </summary>
+            <param name="name">The name of the operand to replace</param>
+            <param name="symbol">The symbol or address to replace the operand with</param>
+        </member>
+        <member name="M:OpennessLibrary.XPlcNetwork.ReplaceContact(System.String,System.String)">
+            <summary>
+            Replace a boolean contact with converted SCL code.
+            </summary>
+            <param name="name">The name of the operand at the contact.</param>
+            <param name="code">The SCL code to be inserted as FBD/LAD logic.</param>
+            <example>
+            The SCL code must be one line with an assignment statement. Examples:
+            <code>
+            T := #localVar AND globalVar;
+            T := (#localVar AND globalvar) OR I100.0;
+            </code>
+            </example>
+        </member>
+        <member name="M:OpennessLibrary.XPlcNetwork.NegateContact(System.String)">
+            <summary>
+            Inverts the logic of an AND or OR contact in LAD;
+            Toggles the inverter on an operand in FBD.
+            </summary>
+            <param name="name">The name of the operand at the contact.</param>
+        </member>
+        <member name="P:OpennessLibrary.XPlcNetwork.IsCustomNetwork">
+            <summary>
+            A custom network will not be overwritten on import if the target block already exists.
+            The network is identified by the network comment in the current editing language.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcNetwork.#ctor(System.String)">
+            <summary>
+            Creates a new network with the parsed SCL code as logic.
+            </summary>
+            <param name="code">The SCL code to be parsed as logic.</param>
+            <example>
+            The SCL code can be one or more lines with an assignment statement. Examples:
+            <code>
+            #localVar := #localVar AND globalVar;
+            A20.5 := (#localVar AND globalvar) OR I100.0;
+            </code>
+            </example>
+        </member>
+        <member name="T:OpennessLibrary.XPlcNetworkSCL">
+            <summary>
+            Single SCL network for usage in an FBD/LAD block.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcNetworkSCL.#ctor(System.String)">
+            <summary>
+            Creates a new network with the given code.
+            </summary>
+            <param name="code">The SCL code</param>
+        </member>
+        <member name="T:OpennessLibrary.XPlcSingleCallNetwork">
+            <summary>
+            A network with a single block call.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcSingleCallNetwork.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new network with a single block call.
+            </summary>
+            <param name="SingleBlockCall">The name of the block to call</param>
+            <param name="Instance">The name of the instance data block</param>
+        </member>
+        <member name="M:OpennessLibrary.XPlcSingleCallNetwork.ConnectOperand(System.String,System.String,OpennessLibrary.PlcBlockSection,System.String,OpennessLibrary.Scope)">
+            <summary>
+            Connects any block input or output operand to the given variable or constant.
+            </summary>
+            <param name="name">The name of the Input/Output/InOut operand</param>
+            <param name="type">The type of the operand</param>
+            <param name="section">The interface section of the operand</param>
+            <param name="symbol">The symbol/address/constant to be connected</param>
+            <param name="scope">The scope of the symbol/address/constant</param>
+        </member>
+        <member name="T:OpennessLibrary.XPlcTag">
+            <summary>
+            A single PLC tag.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.XPlcTag.Name">
+            <summary>
+            The unique name of the tag.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.XPlcTag.Type">
+            <summary>
+            The data type of the tag.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.XPlcTag.LogicalAddress">
+            <summary>
+            The logical address of the tag. Empty for constants.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.XPlcTag.Comment">
+            <summary>
+            Optional comment for the tag.
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.XPlcTemplateNetwork">
+            <summary>
+            A network created from a template.
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.PlcBlockType">
+            <summary>
+            Defines the block type.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.PlcBlockType.FC">
+            <summary>
+            Function
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.PlcBlockType.FB">
+            <summary>
+            Function block
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.PlcBlockType.DB">
+            <summary>
+            Global data block
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.PlcBlockType.F_FC">
+            <summary>
+            Failsafe function
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.PlcBlockType.F_FB">
+            <summary>
+            Failsafe function block
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.PlcBlockType.F_DB">
+            <summary>
+            Failsafe global data block
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.PlcBlockSection">
+            <summary>
+            The section of the block interface.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.PlcBlockSection.Input">
+            <summary>
+            Input section
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.PlcBlockSection.Output">
+            <summary>
+            Output section
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.PlcBlockSection.InOut">
+            <summary>
+            InOut section
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.PlcBlockSection.Static">
+            <summary>
+            Static Section (Only for FB, DB)
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.PlcBlockSection.Temp">
+            <summary>
+            Temp section
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.PlcBlockSection.Constant">
+            <summary>
+            Constant section
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.Scope">
+            <summary>
+            The scope of the variable or constant definition.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Scope.GlobalConstant">
+            <summary>
+            Global constant, defined in tag table
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Scope.LocalConstant">
+            <summary>
+            Local constant, defined in block interface
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Scope.GlobalVariable">
+            <summary>
+            Global variable, defined in tag table
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Scope.LocalVariable">
+            <summary>
+            Local variable, defined in block interface
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Scope.LiteralConstant">
+            <summary>
+            Literal constant
+            <code>"123.0"</code>
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Scope.TypedConstant">
+            <summary>
+            Literal constant with type identifier
+            <code>"DINT#1234"</code>
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.Scope.Undef">
+            <summary>
+            Undefined, let TIA guess
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.XPlc">
+            <summary>
+            Reference to a PLC object in the TIA Portal project.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.XPlc.Name">
+            <summary>
+            The name of the device item.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlc.Import(OpennessLibrary.ImportExportObject,System.String)">
+            <summary>
+            Imports the given object to the PLC.
+            </summary>
+            <remarks>If an object of the same type with the same name already exists, it will be overwritten.
+            </remarks>
+            <param name="obj">The object to be imported.</param>
+            <param name="path">The target path. Will be created if nonexistent.</param>
+        </member>
+        <member name="M:OpennessLibrary.XPlc.GetPlcBlock(System.String)">
+            <summary>
+            Creates a copy of an existing block.
+            </summary>
+            <param name="name">The name of the block.</param>
+            <returns></returns>
+        </member>
+        <member name="M:OpennessLibrary.XPlc.GetPlcType(System.String)">
+            <summary>
+            Creates a copy of an existing type.
+            </summary>
+            <param name="name">The name of the type.</param>
+            <returns></returns>
+        </member>
+        <member name="M:OpennessLibrary.XPlc.ShowPlcBlockInEditor(System.String)">
+            <summary>
+            Open a block in the TIA plc block editor.
+            </summary>
+            <param name="name">The name of the block.</param>
+        </member>
+        <member name="M:OpennessLibrary.XPlc.CreateNetworkFromTemplate(System.String,System.String)">
+            <summary>
+            Creates a copy of an existing network.
+            </summary>
+            <param name="TemplateBlock">The name of the block with the source network.</param>
+            <param name="TemplateNetwork">The title of the source network.</param>
+            <returns>A copy of the source network.</returns>
+        </member>
+        <member name="M:OpennessLibrary.XPlc.GetOpennessObject``1">
+            <summary>
+            Returns the underlying TIA Openness object associated with this object.
+            </summary>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <returns>Null if object cannot be found.</returns>
+        </member>
+        <member name="M:OpennessLibrary.XPlc.GetOpennessObject``1(System.String)">
+            <summary>
+            Searches recursively and returns the TIA Openness object with the given name and type.
+            </summary>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <param name="name">The name of the object to return.</param>
+            <returns>Null if object cannot be found.</returns>
+        </member>
+        <member name="M:OpennessLibrary.XPlc.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlc.Finalize">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.XPlcBlock">
+            <summary>
+            A plc code block in FBD or LAD or a plc data block.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.XPlcBlock.Networks">
+            <summary>
+            The FBD/LAD/SCL networks of the code block.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcBlock.#ctor(System.String,OpennessLibrary.PlcBlockType)">
+            <summary>
+            Creates a new and empty plc block.
+            </summary>
+            <param name="name">The name of the block.</param>
+            <param name="type">The type of the block.</param>
+        </member>
+        <member name="P:OpennessLibrary.XPlcBlock.Name">
+            <summary>
+            The name of the block.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.XPlcBlock.Number">
+            <summary>
+            The number of the block.
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.XPlcBlock.ProgrammingLanguage">
+            <summary>
+            The programming language.
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.XPlcBlock.ProgrammingLanguage.LAD">
+            <summary>LAD/KOP</summary>
+        </member>
+        <member name="F:OpennessLibrary.XPlcBlock.ProgrammingLanguage.FBD">
+            <summary>FBD/FUP</summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcBlock.SetProgrammingLanguage(OpennessLibrary.XPlcBlock.ProgrammingLanguage)">
+            <summary>
+            Set the programming language of the block.
+            </summary>
+            <param name="programmingLanguage">The target programming language.</param>
+        </member>
+        <member name="P:OpennessLibrary.XPlcBlock.Title">
+            <summary>
+            The title of the block.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.XPlcBlock.Comment">
+            <summary>
+            The block comment of the block.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcBlock.AddToInterface(System.String,System.String,System.String,OpennessLibrary.PlcBlockSection,System.String)">
+            <summary>
+            Add a parameter declaration to the block's interface.
+            </summary>
+            <param name="Name">The name of the parameter.</param>
+            <param name="Type">The type of the parameter.</param>
+            <param name="Value">The start value. Empty for default.</param>
+            <param name="Section">The section of the block interface.</param>
+            <param name="Comment">The comment of the parameter.</param>
+        </member>
+        <member name="T:OpennessLibrary.XPlcTagTable">
+            <summary>
+            Represents a PLC Tag Table that can be imported to a TIA Project
+            </summary>
+        </member>
+        <member name="F:OpennessLibrary.XPlcTagTable.Tags">
+            <summary>
+            The list of all tags in this tag table
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcTagTable.#ctor">
+            <summary>
+            Creates a new tag table.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.XPlcTagTable.Name">
+            <summary>
+            The unique name of the tag table.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcTagTable.AddTag(System.String,System.String,System.String,System.String)">
+            <summary>
+            Add a single tag to the tag table.
+            </summary>
+            <param name="Name">The name of the tag.</param>
+            <param name="Type">The data type of the tag.</param>
+            <param name="LogicalAddress">The address of the tag.</param>
+            <param name="Comment">An optional comment.</param>
+        </member>
+        <member name="T:OpennessLibrary.XPlcType">
+            <summary>
+            Represents a PLC data type (UDT) that can be imported to a TIA Project
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcType.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of a plc data type (UDT).
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="P:OpennessLibrary.XPlcType.Name">
+            <summary>
+            The unique name of the plc type.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XPlcType.AddToInterface(System.String,System.String,System.String,System.String)">
+            <summary>
+            Add a parameter declaration to the block's interface.
+            </summary>
+            <param name="Name">The name of the parameter.</param>
+            <param name="Type">The type of the parameter.</param>
+            <param name="Value">The start value. Empty for default.</param>
+            <param name="Comment">The comment of the parameter.</param>
+        </member>
+        <member name="T:OpennessLibrary.ObjectType">
+            <summary>
+                The type of an object for import/export
+            </summary>
+        </member>
+        <member name="T:OpennessLibrary.XProject">
+            <summary>
+                Reference to a TIA project.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XProject.#ctor">
+            <summary>
+                Attaches to a single running TIA Portal process.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XProject.#ctor(System.String)">
+            <summary>
+                Attaches to a running TIA Portal process with the given project.
+            </summary>
+            <param name="file">The project file name.</param>
+        </member>
+        <member name="M:OpennessLibrary.XProject.LoadAssembly">
+            <summary>
+                Resolves the TIA openness API.
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.XProject.AssemblyPath">
+            <summary>
+                Returns the absolute path of the TIA Openness DLL
+            </summary>
+        </member>
+        <member name="P:OpennessLibrary.XProject.Projects">
+            <summary>
+                Returns a list of the currently opened projects.
+            </summary>
+        </member>
+        <member name="M:OpennessLibrary.XProject.GetPlc">
+            <summary>
+                Returns a reference to the first plc object found in the project.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OpennessLibrary.XProject.GetPlc(System.String)">
+            <summary>
+                Returns a reference to the plc object with this name.
+            </summary>
+            <param name="name">The name of the PLC device</param>
+            <returns></returns>
+        </member>
+        <member name="M:OpennessLibrary.XProject.GetHmi">
+            <summary>
+                Returns a reference to a single hmi object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OpennessLibrary.XProject.GetHmi(System.String)">
+            <summary>
+                eturns a reference to a single hmi object with this name.
+            </summary>
+            <param name="name">The name of the HMI device.</param>
+            <returns></returns>
+        </member>
+        <member name="M:OpennessLibrary.XProject.GetOpennessObject``1">
+            <summary>
+                Returns the underlying TIA Openness object associated with this object.
+            </summary>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <returns>Null if object cannot be found.</returns>
+        </member>
+        <member name="M:OpennessLibrary.XProject.Dispose">
+            <summary>
+                Performs application-defined tasks associated with freeing, releasing, or resetting
+                unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:InstructionBaseVisitor`1">
+            <summary>
+            This class provides an empty implementation of <see cref="T:IInstructionVisitor`1"/>,
+            which can be extended to create a visitor which only needs to handle a subset
+            of the available methods.
+            </summary>
+            <typeparam name="Result">The return type of the visit operation.</typeparam>
+        </member>
+        <member name="M:InstructionBaseVisitor`1.VisitProgram(InstructionParser.ProgramContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:InstructionParser.program"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:InstructionBaseVisitor`1.VisitInstruction(InstructionParser.InstructionContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:InstructionParser.instruction"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:InstructionBaseVisitor`1.VisitAssignment(InstructionParser.AssignmentContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:InstructionParser.assignment"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:InstructionBaseVisitor`1.VisitExpression(InstructionParser.ExpressionContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:InstructionParser.expression"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:InstructionBaseVisitor`1.VisitOperand(InstructionParser.OperandContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:InstructionParser.operand"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="T:IInstructionVisitor`1">
+            <summary>
+            This interface defines a complete generic visitor for a parse tree produced
+            by <see cref="T:InstructionParser"/>.
+            </summary>
+            <typeparam name="Result">The return type of the visit operation.</typeparam>
+        </member>
+        <member name="M:IInstructionVisitor`1.VisitProgram(InstructionParser.ProgramContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:InstructionParser.program"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IInstructionVisitor`1.VisitInstruction(InstructionParser.InstructionContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:InstructionParser.instruction"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IInstructionVisitor`1.VisitAssignment(InstructionParser.AssignmentContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:InstructionParser.assignment"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IInstructionVisitor`1.VisitExpression(InstructionParser.ExpressionContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:InstructionParser.expression"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IInstructionVisitor`1.VisitOperand(InstructionParser.OperandContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:InstructionParser.operand"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="T:OperandBaseVisitor`1">
+            <summary>
+            This class provides an empty implementation of <see cref="T:IOperandVisitor`1"/>,
+            which can be extended to create a visitor which only needs to handle a subset
+            of the available methods.
+            </summary>
+            <typeparam name="Result">The return type of the visit operation.</typeparam>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitLines(OperandParser.LinesContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.lines"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitOperand(OperandParser.OperandContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.operand"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitType(OperandParser.TypeContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.type"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitTypedConstant(OperandParser.TypedConstantContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.typedConstant"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitLiteralConstant(OperandParser.LiteralConstantContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.literalConstant"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitCBool(OperandParser.CBoolContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.cBool"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitCInteger(OperandParser.CIntegerContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.cInteger"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitCReal(OperandParser.CRealContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.cReal"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitValue(OperandParser.ValueContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.value"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitCCharacter(OperandParser.CCharacterContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.cCharacter"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitCString(OperandParser.CStringContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.cString"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitSymbol(OperandParser.SymbolContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.symbol"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitComponent(OperandParser.ComponentContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.component"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitArrayMember(OperandParser.ArrayMemberContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.arrayMember"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitArrayAccess(OperandParser.ArrayAccessContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.arrayAccess"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitAddress(OperandParser.AddressContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.address"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitByteOffset(OperandParser.ByteOffsetContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.byteOffset"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitBitOffset(OperandParser.BitOffsetContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.bitOffset"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitContent(OperandParser.ContentContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.content"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitLetter(OperandParser.LetterContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.letter"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OperandBaseVisitor`1.VisitCharset(OperandParser.CharsetContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.charset"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="T:IOperandVisitor`1">
+            <summary>
+            This interface defines a complete generic visitor for a parse tree produced
+            by <see cref="T:OperandParser"/>.
+            </summary>
+            <typeparam name="Result">The return type of the visit operation.</typeparam>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitLines(OperandParser.LinesContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.lines"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitOperand(OperandParser.OperandContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.operand"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitType(OperandParser.TypeContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.type"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitTypedConstant(OperandParser.TypedConstantContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.typedConstant"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitLiteralConstant(OperandParser.LiteralConstantContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.literalConstant"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitCBool(OperandParser.CBoolContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.cBool"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitCInteger(OperandParser.CIntegerContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.cInteger"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitCReal(OperandParser.CRealContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.cReal"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitValue(OperandParser.ValueContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.value"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitCCharacter(OperandParser.CCharacterContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.cCharacter"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitCString(OperandParser.CStringContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.cString"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitSymbol(OperandParser.SymbolContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.symbol"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitComponent(OperandParser.ComponentContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.component"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitArrayMember(OperandParser.ArrayMemberContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.arrayMember"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitArrayAccess(OperandParser.ArrayAccessContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.arrayAccess"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitAddress(OperandParser.AddressContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.address"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitByteOffset(OperandParser.ByteOffsetContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.byteOffset"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitBitOffset(OperandParser.BitOffsetContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.bitOffset"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitContent(OperandParser.ContentContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.content"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitLetter(OperandParser.LetterContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.letter"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:IOperandVisitor`1.VisitCharset(OperandParser.CharsetContext)">
+            <summary>
+            Visit a parse tree produced by <see cref="M:OperandParser.charset"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+    </members>
+</doc>
